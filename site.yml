@@ -1,0 +1,61 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+
+  - name: install updates (centos)
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "centos"
+
+  - name: install updates (ubuntu)
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "ubuntu"
+
+
+
+-  hosts: web_servers
+   become: true
+   tasks:
+
+
+
+  - name: install apache and php for ubuntu servers 
+    packages:
+      name:
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
+      state: latest
+    when: ansible_distribution == "ubuntu"
+
+  - name: install apache and php for Centos servers
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "centos"
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: install mariadb package (centos)
+    dnf:
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "centos"
+
+  - name: install mariadb package (ubuntu)
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "ubuntu"     
+
+    
+   

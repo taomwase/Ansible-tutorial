@@ -1,4 +1,7 @@
-cesc4@10.80.0.15 apache_package=apache2 php package=libapache2-mod-php
-teamroot@10.80.0.35 apache_package=apache2 php package=libapache2-mod-php
-cesc4@192.168.88.252 apache_package=httpd php_package=php
+[web_servers]
+taocesc4@10.80.0.50
+teamroot@10.80.0.35
+
+[file_servers]
+cesc4@192.168.88.252
 
