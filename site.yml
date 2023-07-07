@@ -6,12 +6,14 @@
 
 
   - name: install updates (centos)
+    tags: always
     dnf:
       update_only: yes
       update_cache: yes
     when: ansible_distribution == "centos"
 
   - name: install updates (ubuntu)
+    tags: always 
     apt:
       upgrade: dist
       update_cache: yes
@@ -25,8 +27,9 @@
 
 
 
-  - name: install apache and php for ubuntu servers 
-    packages:
+  - name: install apache and php for ubuntu servers
+    tags: apache,apache2,ubuntu 
+    apt:
       name:
         - "{{ apache_package }}"
         - "{{ php_package }}"
@@ -34,6 +37,7 @@
     when: ansible_distribution == "ubuntu"
 
   - name: install apache and php for Centos servers
+    tags: apache,centos,http
     dnf:
       name:
         - httpd
@@ -46,12 +50,14 @@
   tasks:
 
   - name: install mariadb package (centos)
+    tags: centos,db,mariadb
     dnf:
       name: mariadb
       state: latest
     when: ansible_distribution == "centos"
 
   - name: install mariadb package (ubuntu)
+    tags: db,mariadb,ubuntu
     apt:
       name: mariadb-server
       state: latest
